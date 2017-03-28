@@ -1,0 +1,3 @@
+/home/farmer/code/WCG4/build/CMakeFiles/edit_cache.dir
+/home/farmer/code/WCG4/build/CMakeFiles/rebuild_cache.dir
+/home/farmer/code/WCG4/build/CMakeFiles/WCG4.dir

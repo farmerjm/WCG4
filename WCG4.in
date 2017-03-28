@@ -1,0 +1,7 @@
+
+
+/gun/particle gamma
+/gun/energy 6 MeV
+
+/run/printProgress 100
+run/beamOn 100
