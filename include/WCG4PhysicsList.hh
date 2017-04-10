@@ -1,17 +1,17 @@
 
-#ifndef WCSimPhysicsList_h
-#define WCSimPhysicsList_h 1
+#ifndef WCG4PhysicsList_h
+#define WCG4PhysicsList_h 1
 //#include "G4VUserPhysicsList.hh"
 #include "G4VPhysicsConstructor.hh"
-#include "WCSimPhysicsMessenger.hh"
+#include "WCG4PhysicsMessenger.hh"
 #include "globals.hh"
 
-//class WCSimPhysicsList: public G4VUserPhysicsList
-class WCSimPhysicsList: public G4VPhysicsConstructor
+//class WCG4PhysicsList: public G4VUserPhysicsList
+class WCG4PhysicsList: public G4VPhysicsConstructor
 {
   public:
-    WCSimPhysicsList();
-    ~WCSimPhysicsList();
+    WCG4PhysicsList();
+    ~WCG4PhysicsList();
 
   //=================================
   // Added by JLR 2005-07-05
@@ -22,7 +22,7 @@ class WCSimPhysicsList: public G4VPhysicsConstructor
   G4String GetSecondaryHadModel() {return SecondaryHadModel;}
   
   private:
-    WCSimPhysicsMessenger* PhysicsMessenger;
+    WCG4PhysicsMessenger* PhysicsMessenger;
 
     G4String SecondaryHadModel;
 

@@ -1,7 +1,7 @@
 // Physics List
 
-#include "WCSimPhysicsList.hh"
-#include "WCSimPhysicsMessenger.hh"
+#include "WCG4PhysicsList.hh"
+#include "WCG4PhysicsMessenger.hh"
 
 #include "G4ParticleDefinition.hh"
 #include "G4ParticleWithCuts.hh"
@@ -25,17 +25,17 @@
 #include "G4HadronCaptureProcess.hh" //amb79
 
 
-//WCSimPhysicsList::WCSimPhysicsList():  G4VUserPhysicsList(), PhysicsMessenger(0)
-WCSimPhysicsList::WCSimPhysicsList():  G4VPhysicsConstructor(), PhysicsMessenger(0)
+//WCG4PhysicsList::WCG4PhysicsList():  G4VUserPhysicsList(), PhysicsMessenger(0)
+WCG4PhysicsList::WCG4PhysicsList():  G4VPhysicsConstructor(), PhysicsMessenger(0)
 {
- //defaultCutValue = 1.0*mm; //moved to WCSimPhysicsListFactory.cc
+ //defaultCutValue = 1.0*mm; //moved to WCG4PhysicsListFactory.cc
  SetVerboseLevel(1);
 
- PhysicsMessenger = new WCSimPhysicsMessenger(this);
+ PhysicsMessenger = new WCG4PhysicsMessenger(this);
 
 }
 
-WCSimPhysicsList::~WCSimPhysicsList()
+WCG4PhysicsList::~WCG4PhysicsList()
 {
   delete PhysicsMessenger;
   PhysicsMessenger = 0;
@@ -43,7 +43,7 @@ WCSimPhysicsList::~WCSimPhysicsList()
 
 //----particle construction----
 
-void WCSimPhysicsList::ConstructParticle()
+void WCG4PhysicsList::ConstructParticle()
 {
   G4LeptonConstructor leptonConstructor;
   G4MesonConstructor  mesonConstructor;
@@ -62,7 +62,7 @@ void WCSimPhysicsList::ConstructParticle()
 
 //----construction of processes----
 
-void WCSimPhysicsList::ConstructProcess()
+void WCG4PhysicsList::ConstructProcess()
 {
   //AddTransportation();
   ConstructEM();
@@ -93,7 +93,7 @@ void WCSimPhysicsList::ConstructProcess()
 
 //---E&M construction
 
-void WCSimPhysicsList::ConstructEM()
+void WCG4PhysicsList::ConstructEM()
 {
   //G4MultipleScattering class becomes obsolete and has to be removed and
   //replaced by new G4MultipleScattering classes for e+-, mu+-, hadron and ions.
@@ -220,7 +220,7 @@ void WCSimPhysicsList::ConstructEM()
 #include "G4StepLimiter.hh"
 #endif
 
-void WCSimPhysicsList::ConstructlArStepLimiter(){
+void WCG4PhysicsList::ConstructlArStepLimiter(){
 
 #ifdef GEANT4_7_0
   theParticleIterator->reset();
@@ -249,7 +249,7 @@ void WCSimPhysicsList::ConstructlArStepLimiter(){
 #include "G4OpMieHG.hh"
 #include "G4OpBoundaryProcess.hh"
 
-void WCSimPhysicsList::ConstructOp(){
+void WCG4PhysicsList::ConstructOp(){
 
   G4Cerenkov*           theCherenkovProcess        = new G4Cerenkov("Cerenkov");
   G4OpAbsorption*      theAbsorptionProcess         = new G4OpAbsorption();
@@ -312,7 +312,7 @@ void WCSimPhysicsList::ConstructOp(){
 
 #include "G4Decay.hh"
 
-void WCSimPhysicsList::ConstructGeneral()
+void WCG4PhysicsList::ConstructGeneral()
 {
   // Add Decay Process
   G4Decay* theDecayProcess = new G4Decay();
@@ -397,7 +397,7 @@ void WCSimPhysicsList::ConstructGeneral()
 #include "G4AntiProtonAnnihilationAtRest.hh"
 #include "G4AntiNeutronAnnihilationAtRest.hh"
 
-void WCSimPhysicsList::ConstructHad() 
+void WCG4PhysicsList::ConstructHad() 
 {
 
 // Makes discrete physics processes for the hadrons, at present limited
@@ -709,7 +709,7 @@ void WCSimPhysicsList::ConstructHad()
 // Gheisha = Original Geant4 default 
 // Bertini = Bertini intra-nuclear cascade model
 // Binary  = Binary intra-nuclear cascade model
-void WCSimPhysicsList::SetSecondaryHad(G4String hadval)
+void WCG4PhysicsList::SetSecondaryHad(G4String hadval)
 {
   SecondaryHadModel = hadval;
 
@@ -743,11 +743,11 @@ void WCSimPhysicsList::SetSecondaryHad(G4String hadval)
 }
 
 //----set cut values----
-/* Setting cuts occurs in WCSimPhysicsListFactory.cc
-void WCSimPhysicsList::SetCuts()
+/* Setting cuts occurs in WCG4PhysicsListFactory.cc
+void WCG4PhysicsList::SetCuts()
 {
   if (verboseLevel >0){
-    G4cout << "WCSimPhysicsList::SetCuts:";
+    G4cout << "WCG4PhysicsList::SetCuts:";
     G4cout << "CutLength : " << G4BestUnit(defaultCutValue,"Length") << G4endl;
   }
 
