@@ -34,7 +34,9 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   //create shapes:
   G4Box* worldBox = new G4Box("World", worlddim, worlddim, worlddim);
   G4Tubs* Tank = new G4Tubs("Tank", 0,  tankRadius, tankHeight, 0.*deg, 360.*deg); 
-  G4Tubs* Walls = new G4Tubs("Walls",0, tankRadius, tankRadius+wallThickness, 0.*deg, 360.*deg);
+  G4Tubs* Sidewalls = new G4Tubs("Sidewalls",tankRadius, tankRadius+wallThickness, tankHeight, 0.*deg, 360.*deg);
+  G4Tubs* Topwalls = new G4Tubs("Topwalls",0, tankRadius+wallThickness, tankHeight, 0.*deg, 360.*deg);
+  G4Tubs* Bottomwalls = new G4Tubs("Bottomwalls",0, tankRadius+wallThickness, tankHeight, 0.*deg, 360.*deg);
 
   //Now, define materials from internal G4 databases:
   G4NistManager* man = G4NistManager::Instance();
@@ -46,16 +48,23 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   //Next, create logical volumes by matching the shapes with materials
   G4LogicalVolume* logWorld = new G4LogicalVolume(worldBox,Vacuum, "World");
   G4LogicalVolume* logTank = new G4LogicalVolume(Tank, Water, "Tank"); 
-  G4LogicalVolume* logWalls = new G4LogicalVolume(Walls, Polyethylene, "Walls");  
+  G4LogicalVolume* logSidewalls = new G4LogicalVolume(Sidewalls, Polyethylene, "Sidewalls");  
+  G4LogicalVolume* logTopwalls = new G4LogicalVolume(Topwalls, Polyethylene, "Topwalls");  
+  G4LogicalVolume* logBottomwalls = new G4LogicalVolume(Bottomwalls, Polyethylene, "Bottomwlls");  
 
   G4ThreeVector centroid = G4ThreeVector(0,0,0);
+  G4ThreeVector vTopwalls = G4ThreeVector(0,0,(tankHeight+wallThickness)/2);
+  G4ThreeVector vBottomwalls = G4ThreeVector(0,0,-(tankHeight+wallThcikness)/2);
 
   G4VPhysicalVolume* physWorld = new G4PVPlacement(nullptr,centroid, logWorld,"World", nullptr, false, 0);
   G4VPhysicalVolume* physTank = new G4PVPlacement(nullptr, centroid, logTank, "Tank", logWorld, false, 1);
-  G4VPhysicalVolume* physWalls = new G4PVPlacement(nullptr,centroid, logWalls, "Walls", logWorld, false, 2);
+  G4VPhysicalVolume* physSidewalls = new G4PVPlacement(nullptr,centroid, logSidewalls, "Sidewalls", logWorld, false, 2);
+  G4VPhysicalVolume* physTopwalls = new G4PVPlacement(nullptr,vTopwalls, logTopwalls, "Topwalls", logWorld, false, 2);
+  G4VPhysicalVolume* physBottomwalls = new G4PVPlacement(nullptr,vBottomwalls, logBottomwalls, "Botomwalls", logWorld, false, 2);
 
-  fScoringVolume = logTank;
-  
+  //fScoringVolume = logTank;
+  //What is this?
+ 
   return physWorld;
 }
 
