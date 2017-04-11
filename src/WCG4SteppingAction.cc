@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "globals.hh"
 
 #include "WCG4SteppingAction.hh"
 
@@ -8,9 +9,11 @@
 #include "G4VParticleChange.hh"
 #include "G4SteppingVerbose.hh"
 #include "G4SteppingManager.hh"
+#include "G4VPhysicalVolume.hh"
 #include "G4PVParameterised.hh"
 #include "G4PVReplica.hh"
 #include "G4SDManager.hh"
+#include "G4OpticalPhoton.hh"
 #include "G4RunManager.hh"
 
 
@@ -25,16 +28,10 @@ void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4StepPoint* PostStep=aStep->GetPostStepPoint();
 
   //Is it a photon? If not, ignore it:  we do not need it.
-  G4Track* theTrack = GetTrack();
-  if (theTrack->GetDefinition() != G4OpticalPhoton->OpticalPhotonDefinition() ) return;
+  if (track->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition() ) return;
 
   //First, check that we are inside the region of interest:
-
-  G4PhysicalVolume* Mother = PostStep->GetTouchableHandle()->GetVolume();
-
-  G4String MotherName=Mother->GetName();
-
-  if (MotherName=="Tank")
+  if (volume->GetName()=="Tank")
   {
 
     if (PostStep->GetProcessDefinedStep()->GetProcessName()=="Cerenkov")
@@ -43,7 +40,7 @@ void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep)
     }
 
 
-    if (PostStep->GetStepStatus==fGeomBoundary)
+    if (PostStep->GetStepStatus()==fGeomBoundary)
     {
       //If photon, then increment some counter
       //Check wavelength here

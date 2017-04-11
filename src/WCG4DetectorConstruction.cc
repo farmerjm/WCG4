@@ -1,5 +1,5 @@
 #include "WCG4DetectorConstruction.hh"
-
+#include "globals.hh"
 #include "G4RunManager.hh"
 #include "G4NistManager.hh"
 #include "G4Material.hh"
@@ -54,7 +54,7 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
 
   G4ThreeVector centroid = G4ThreeVector(0,0,0);
   G4ThreeVector vTopwalls = G4ThreeVector(0,0,(tankHeight+wallThickness)/2);
-  G4ThreeVector vBottomwalls = G4ThreeVector(0,0,-(tankHeight+wallThcikness)/2);
+  G4ThreeVector vBottomwalls = G4ThreeVector(0,0,-(tankHeight+wallThickness)/2);
 
   G4VPhysicalVolume* physWorld = new G4PVPlacement(nullptr,centroid, logWorld,"World", nullptr, false, 0);
   G4VPhysicalVolume* physTank = new G4PVPlacement(nullptr, centroid, logTank, "Tank", logWorld, false, 1);
