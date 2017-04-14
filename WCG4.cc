@@ -38,6 +38,7 @@ int main() { // construct the default run manager
 
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
+  runManager->SetUserInitialization(new WCG4SteppingAction);
 
   //runManager->SetUserInitialization(new ExG4PhysicsList00);
 
