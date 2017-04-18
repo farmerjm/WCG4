@@ -2,10 +2,11 @@
 #include "G4UImanager.hh"
 
 
-
 #include "WCG4DetectorConstruction.hh"
 #include "WCG4ActionInitialization.hh"
 #include "WCG4SteppingAction.hh"
+#include "WCG4PhysListConfig.hh"
+#include "WCG4PhysListFactory.hh"
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
@@ -32,8 +33,10 @@ int main() { // construct the default run manager
 
   //build world geometry (taken from p. 6-8)
 
-  G4VModularPhysicsList* physicsList = new QBBC;
-  physicsList->SetVerboseLevel(1);
+  WCG4PhysListConfig* conf = new WCG4PhysListConfig();
+  WCG4PhysListFactory* fact = new WCG4PhysListFactory(conf);
+  G4VModularPhysicsList* physicsList = fact->BuildPhysicsList();
+
   runManager->SetUserInitialization(physicsList);
 
 
