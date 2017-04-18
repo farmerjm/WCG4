@@ -5,6 +5,7 @@
 
 #include "WCG4DetectorConstruction.hh"
 #include "WCG4ActionInitialization.hh"
+#include "WCG4SteppingAction.hh"
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
@@ -38,9 +39,7 @@ int main() { // construct the default run manager
 
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
-  runManager->SetUserInitialization(new WCG4SteppingAction);
-
-  //runManager->SetUserInitialization(new ExG4PhysicsList00);
+  runManager->SetUserAction(new WCG4SteppingAction);
 
   // initialize G4 kernel
   runManager->Initialize();
