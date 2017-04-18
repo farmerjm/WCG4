@@ -37,11 +37,13 @@ int main() { // construct the default run manager
   WCG4PhysListFactory* fact = new WCG4PhysListFactory(conf);
   G4VModularPhysicsList* physicsList = fact->BuildPhysicsList();
 
-  runManager->SetUserInitialization(physicsList);
 
 
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
+  runManager->SetUserInitialization(physicsList);
+
+  //Cherenkov counting / photon tracking
   runManager->SetUserAction(new WCG4SteppingAction);
 
   // initialize G4 kernel
