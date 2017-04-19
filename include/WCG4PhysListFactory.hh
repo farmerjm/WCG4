@@ -1,8 +1,8 @@
-#include"G4PhysListFactory.hh"
-#include"globals.hh"
-#include"G4VModularPhysicsList.hh"
+#include "G4PhysListFactory.hh"
+#include "globals.hh"
+#include "WCG4PhysList.hh"
 #include "WCG4PhysListConfig.hh"
-
+#include "G4OpticalPhysics.hh"
 
 //The idea:
 //PhysListFactory-> ModularPhysicsList
@@ -19,5 +19,5 @@ public:
   ~WCG4PhysListFactory();
 
 
-  G4VModularPhysicsList* BuildPhysicsList();
+  WCG4PhysList* BuildPhysicsList();
 };

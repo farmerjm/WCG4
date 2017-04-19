@@ -20,12 +20,17 @@
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
+
+#include "common.hh"
+
 #include "Randomize.hh"
 
 //Need to define a custom class that extends the G4Physics list and redefine its abstract methods
 //Perhaps the best course of action here is to look at the source code from WCSim and steal things.
 //example code taken from user manual
 
+int numCherenkov;
+int photonCounter;
 
 int main() { // construct the default run manager
 
@@ -37,7 +42,8 @@ int main() { // construct the default run manager
   WCG4PhysListFactory* fact = new WCG4PhysListFactory(conf);
   G4VModularPhysicsList* physicsList = fact->BuildPhysicsList();
 
-
+  numCherenkov=0;
+  photonCounter=0;
 
   runManager->SetUserInitialization(physicsList);
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
@@ -54,9 +60,10 @@ int main() { // construct the default run manager
   UI->ApplyCommand("/event/verbose 1");
   UI->ApplyCommand("/tracking/verbose 0");
   // start a run
-  int numberOfEvent = 3;
+  int numberOfEvent = 1;
   runManager->BeamOn(numberOfEvent);
   // job termination
+  std::cout << numCherenkov << " " << photonCounter << std::endl;
   delete runManager;
   return 0;
 }

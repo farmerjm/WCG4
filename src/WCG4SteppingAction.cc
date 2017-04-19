@@ -1,9 +1,5 @@
 #include "WCG4SteppingAction.hh"
 
-WCG4SteppingAction::WCG4SteppingAction() {
-  photonCounter=0;
-  cherenkovCounter=0;
-}
 
 void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep)
 {
@@ -24,16 +20,17 @@ void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep)
     if (PostStep->GetProcessDefinedStep()->GetProcessName()=="Cerenkov")
     {
       //count Cherenkov photons:  check with calculation directly from Jackson
-      
+      numCherenkov++;
+      std::cout << "Cherenkov found " << std::endl;
     }
-
 
     if (PostStep->GetStepStatus()==fGeomBoundary)
     {
       //If photon, then increment some counter
       //Check wavelength here
+      photonCounter++;
+      std::cout << "Photon exited" << std::endl;
     }
-
   }
 }
 

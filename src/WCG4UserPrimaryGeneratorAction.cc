@@ -84,7 +84,7 @@ void WCG4UserPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   if (!fEnvelopeBox)
   {
     G4LogicalVolume* envLV
-      = G4LogicalVolumeStore::GetInstance()->GetVolume("Envelope");
+      = G4LogicalVolumeStore::GetInstance()->GetVolume("Tank");
     if ( envLV ) fEnvelopeBox = dynamic_cast<G4Box*>(envLV->GetSolid());
   }
 

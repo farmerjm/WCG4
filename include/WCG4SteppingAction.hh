@@ -7,16 +7,14 @@
 #include "G4OpticalPhoton.hh"
 #include "G4RunManager.hh"
 #include "G4VPhysicalVolume.hh"
+#include "common.hh"
 
 class WCG4SteppingAction : public G4UserSteppingAction
 {
 
-private:
-  int photonCounter;
-  int cherenkovCounter;
-
 public:
-  WCG4SteppingAction();
+  WCG4SteppingAction()
+  {};
 
   ~WCG4SteppingAction()
   {};
