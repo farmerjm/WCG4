@@ -39,9 +39,9 @@ int main() { // construct the default run manager
 
 
 
+  runManager->SetUserInitialization(physicsList);
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
-  runManager->SetUserInitialization(physicsList);
 
   //Cherenkov counting / photon tracking
   runManager->SetUserAction(new WCG4SteppingAction);
