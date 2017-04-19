@@ -11,9 +11,12 @@
 class WCG4SteppingAction : public G4UserSteppingAction
 {
 
+private:
+  int photonCounter;
+  int cherenkovCounter;
+
 public:
-  WCG4SteppingAction()
-  {};
+  WCG4SteppingAction();
 
   ~WCG4SteppingAction()
   {};

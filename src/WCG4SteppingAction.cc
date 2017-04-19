@@ -1,12 +1,9 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "globals.hh"
-
 #include "WCG4SteppingAction.hh"
-//#include "G4SteppingVerbose.hh"
-//#include "G4SteppingManager.hh"
-//#include "G4VPhysicalVolume.hh"
 
+WCG4SteppingAction::WCG4SteppingAction() {
+  photonCounter=0;
+  cherenkovCounter=0;
+}
 
 void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep)
 {
@@ -27,6 +24,7 @@ void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep)
     if (PostStep->GetProcessDefinedStep()->GetProcessName()=="Cerenkov")
     {
       //count Cherenkov photons:  check with calculation directly from Jackson
+      
     }
 
 

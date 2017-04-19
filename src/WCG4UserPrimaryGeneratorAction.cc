@@ -53,10 +53,10 @@ WCG4UserPrimaryGeneratorAction::WCG4UserPrimaryGeneratorAction()
   // default particle kinematic
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4String particleName;
-  G4ParticleDefinition* particle
-    = particleTable->FindParticle(particleName="mu-");
+  G4ParticleDefinition* particle = particleTable->FindParticle(particleName="mu-");
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,-1.));
+  fParticleGun->SetParticlePosition(G4ThreeVector(0,0,2));
   fParticleGun->SetParticleEnergy(1.*GeV);
 }
 

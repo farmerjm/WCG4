@@ -24,8 +24,8 @@
 
 //Need to define a custom class that extends the G4Physics list and redefine its abstract methods
 //Perhaps the best course of action here is to look at the source code from WCSim and steal things.
-
 //example code taken from user manual
+
 
 int main() { // construct the default run manager
 
@@ -52,7 +52,7 @@ int main() { // construct the default run manager
   G4UImanager *UI = G4UImanager::GetUIpointer();
   UI->ApplyCommand("/run/verbose 1");
   UI->ApplyCommand("/event/verbose 1");
-  UI->ApplyCommand("/tracking/verbose 1");
+  UI->ApplyCommand("/tracking/verbose 0");
   // start a run
   int numberOfEvent = 3;
   runManager->BeamOn(numberOfEvent);
