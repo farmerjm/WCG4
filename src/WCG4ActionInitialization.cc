@@ -30,6 +30,7 @@
 
 #include "WCG4ActionInitialization.hh"
 #include "WCG4UserPrimaryGeneratorAction.hh"
+#include "WCG4SteppingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -56,14 +57,8 @@ void WCG4ActionInitialization::Build() const
 {
   WCG4UserPrimaryGeneratorAction* PGA = new WCG4UserPrimaryGeneratorAction();
   SetUserAction(PGA);
-
-  //B1RunAction* runAction = new B1RunAction;
-  //SetUserAction(runAction);
   
-  //B1EventAction* eventAction = new B1EventAction(runAction);
-  //SetUserAction(eventAction);
-  
-  //SetUserAction(new B1SteppingAction(eventAction));
+  SetUserAction(new WCG4SteppingAction);
 }  
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

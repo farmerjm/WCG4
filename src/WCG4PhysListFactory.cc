@@ -8,16 +8,13 @@ WCG4PhysListFactory::WCG4PhysListFactory(WCG4PhysListConfig* theConfig) {
 
 WCG4PhysListFactory::~WCG4PhysListFactory() {
 
-
-
 }
 
 WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
 
   G4VModularPhysicsList* list = GetReferencePhysList(referenceListName);
-  WCG4PhysList* outlist;
+  WCG4PhysList* outlist = new WCG4PhysList();
   for (G4int i = 0; ; ++i) {
-    G4cout << i << G4endl;
     G4VPhysicsConstructor* elem =
       const_cast<G4VPhysicsConstructor*> (list->GetPhysics(i));
     if (elem == NULL) break;
@@ -25,9 +22,11 @@ WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
     outlist->RegisterPhysics(elem);
   }
   G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 
-  outlist->RegisterPhysics(new G4OpticalPhysics());
+  G4OpticalPhysics* ophys = new G4OpticalPhysics();
+  outlist->RegisterPhysics(ophys);
 
   //Here, search the config and selectively disable processes
   return outlist;
 }
+
 

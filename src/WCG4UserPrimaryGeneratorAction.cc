@@ -56,7 +56,6 @@ WCG4UserPrimaryGeneratorAction::WCG4UserPrimaryGeneratorAction()
   G4ParticleDefinition* particle = particleTable->FindParticle(particleName="mu-");
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,-1.));
-  fParticleGun->SetParticlePosition(G4ThreeVector(0,0,2));
   fParticleGun->SetParticleEnergy(1.*GeV);
 }
 
@@ -71,43 +70,12 @@ WCG4UserPrimaryGeneratorAction::~WCG4UserPrimaryGeneratorAction()
 
 void WCG4UserPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-  //this function is called at the begining of ecah event
-  //
-
-  // In order to avoid dependence of PrimaryGeneratorAction
-  // on DetectorConstruction class we get Envelope volume
-  // from G4LogicalVolumeStore.
-  
-  G4double envSizeXY = 0;
-  G4double envSizeZ = 0;
-
-  if (!fEnvelopeBox)
-  {
-    G4LogicalVolume* envLV
-      = G4LogicalVolumeStore::GetInstance()->GetVolume("Tank");
-    if ( envLV ) fEnvelopeBox = dynamic_cast<G4Box*>(envLV->GetSolid());
-  }
-
-  if ( fEnvelopeBox ) {
-    envSizeXY = fEnvelopeBox->GetXHalfLength()*2.;
-    envSizeZ = fEnvelopeBox->GetZHalfLength()*2.;
-  }  
-  else  {
-    G4ExceptionDescription msg;
-    msg << "Envelope volume of box shape not found.\n"; 
-    msg << "Perhaps you have changed geometry.\n";
-    msg << "The gun will be place at the center.";
-    G4Exception("WCG4PrimaryGeneratorAction::GeneratePrimaries()",
-     "MyCode0002",JustWarning,msg);
-  }
-
-  G4double size = 0.8; 
   G4double x0 = 0;
   G4double y0 = 0;
-  G4double z0 = envSizeZ+0.1;
+  G4double z0 = 1.81*m;
   
+  G4cout << "Placing ParticleGun at " << "("<<x0 <<","<<y0<<","<<z0<<")"<<G4endl;
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-
   fParticleGun->GeneratePrimaryVertex(anEvent);
 }
 
