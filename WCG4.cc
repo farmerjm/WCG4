@@ -13,16 +13,11 @@
 #else
 #include "G4RunManager.hh"
 #endif
-
 #include "G4UImanager.hh"
 #include "QBBC.hh"
-
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
-
-
 #include "common.hh"
-
 #include "Randomize.hh"
 
 //Need to define a custom class that extends the G4Physics list and redefine its abstract methods

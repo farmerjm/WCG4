@@ -36,7 +36,7 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   G4Material* Air = man->FindOrBuildMaterial("G4_AIR");
   G4Material* Water = man->FindOrBuildMaterial("G4_WATER");
   G4Material* Polyethylene = man->FindOrBuildMaterial("G4_POLYETHYLENE");
-  G4Material* Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-5*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
+  G4Material* Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-9*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
 
   //create shapes:
   G4Box* worldBox = new G4Box("World", 2*worlddim, 2*worlddim, worlddim);
