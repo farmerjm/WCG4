@@ -72,7 +72,7 @@ void WCG4UserPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   G4double x0 = 0;
   G4double y0 = 0;
-  G4double z0 = 1.81*m;
+  G4double z0 = 0.8*m;
   
   G4cout << "Placing ParticleGun at " << "("<<x0 <<","<<y0<<","<<z0<<")"<<G4endl;
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));

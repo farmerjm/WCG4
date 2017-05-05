@@ -31,6 +31,7 @@
 #include "WCG4ActionInitialization.hh"
 #include "WCG4UserPrimaryGeneratorAction.hh"
 #include "WCG4SteppingAction.hh"
+#include "WCG4StackingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -57,6 +58,8 @@ void WCG4ActionInitialization::Build() const
 {
   WCG4UserPrimaryGeneratorAction* PGA = new WCG4UserPrimaryGeneratorAction();
   SetUserAction(PGA);
+  WCG4StackingAction* stack  = new WCG4StackingAction();
+  SetUserAction(stack);
   
   SetUserAction(new WCG4SteppingAction);
 }  

@@ -2,7 +2,8 @@
 
 
 WCG4PhysListFactory::WCG4PhysListFactory(WCG4PhysListConfig* theConfig) {
-  referenceListName="QGSP_BIC_HP";
+  //referenceListName="QGSP_BIC_HP";
+  referenceListName="FTFP_BERT";
 }
 
 
@@ -11,7 +12,6 @@ WCG4PhysListFactory::~WCG4PhysListFactory() {
 }
 
 WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
-
   G4VModularPhysicsList* list = GetReferencePhysList(referenceListName);
   WCG4PhysList* outlist = new WCG4PhysList();
   for (G4int i = 0; ; ++i) {
@@ -22,8 +22,10 @@ WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
     outlist->RegisterPhysics(elem);
   }
   G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 
-  G4OpticalPhysics* ophys = new G4OpticalPhysics();
+  G4OpticalPhysics* ophys = new G4OpticalPhysics(1);
   outlist->RegisterPhysics(ophys);
+  ophys->SetTrackSecondariesFirst(kCerenkov, true);
+  ophys->SetMaxNumPhotonsPerStep(100);
 
   //Here, search the config and selectively disable processes
   return outlist;

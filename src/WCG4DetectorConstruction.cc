@@ -12,12 +12,49 @@
 
 WCG4DetectorConstruction::WCG4DetectorConstruction()
 : G4VUserDetectorConstruction(),
-  fScoringVolume(0)
+  fScoringVolume(0),
+  waterMPT(new G4MaterialPropertiesTable()),
+  tyvekMPT(new G4MaterialPropertiesTable())
 {
+  ConstructMaterials(); 
 }
 
 WCG4DetectorConstruction::~WCG4DetectorConstruction()
 {
+  
+}
+
+void ConstructMaterials() {
+
+  eBins[30] = {  
+    2.08, 2.16, 2.19, 2.23, 2.27, 2.32,
+    2.36, 2.41, 2.46, 2.50, 2.56, 2.61,
+    2.67, 2.72, 2.79, 2.85, 2.92, 2.99,
+    3.06, 3.14, 3.22, 3.31, 3.40, 3.49,
+    3.59, 3.70, 3.81, 3.94, 4.07, 4.20};
+
+  for (int i=0;i <30;i++) eBins[i]*=eV;
+
+  tyvekReflectivity = {
+    0.9957, 0.9953, 0.9948, 0.9942, 0.9939, 0.9937,
+    0.9937, 0.9940, 0.9945, 0.9954, 0.9964, 0.9975,
+    0.9985, 0.9993, 1.0000, 1.0000, 0.9993, 0.9977,
+    0.9948, 0.9903, 0.9840, 0.9753, 0.9642, 0.9500,
+    0.9334, 0.9108, 0.8849, 0.8541, 0.8178, 0.7755};
+
+  for (int i=0;i <30;i++) tyvekReflectivity[i]*=0.94;
+
+  absLength = {
+    0.092, 0.133, 0.180, 0.203, 0.226, 0.258,
+    0.284, 0.302, 0.403, 0.560, 0.735, 0.818,
+    0.923, 0.923, 0.993, 0.993, 1.000, 0.941,
+    0.889, 0.842, 0.754, 0.655, 0.480, 0.380,
+    0.311, 0.257, 0.212, 0.171, 0.137, 0.102};
+
+  for (int i=0;i <30;i++) absLength[i]*=100*m;
+
+  //waterMPT->AddProperty("RINDEX");
+
 }
 
 

@@ -32,6 +32,7 @@
 #define B1DetectorConstruction_h 1
 
 #include "G4VUserDetectorConstruction.hh"
+#include "G4MaterialPropertiesTable.hh"
 #include "globals.hh"
 
 class G4VPhysicalVolume;
@@ -44,13 +45,22 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
   public:
     WCG4DetectorConstruction();
     virtual ~WCG4DetectorConstruction();
-
     virtual G4VPhysicalVolume* Construct();
+
+    void ConstructMaterials();
     
     G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
 
   protected:
     G4LogicalVolume*  fScoringVolume;
+
+  private:
+    double eBins[30];
+    double tyvekReflectivity[30];
+    double absLength[30];
+
+    G4MaterialPropertiesTable* waterMPT;
+    G4MaterialPropertiesTable* tyvekMPT;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
