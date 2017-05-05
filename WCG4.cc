@@ -50,8 +50,8 @@ int main() { // construct the default run manager
   visManager->Initialize();
   G4UImanager *UI = G4UImanager::GetUIpointer();
   UI->ApplyCommand("/run/verbose 1");
-  UI->ApplyCommand("/event/verbose 1");
-  UI->ApplyCommand("/tracking/verbose 1");
+  UI->ApplyCommand("/event/verbose 0");
+  UI->ApplyCommand("/tracking/verbose 0");
   UI->ApplyCommand("/control/execute vis.mac");
 
   int numberOfEvent = 1;

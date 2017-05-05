@@ -55,9 +55,6 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume*  fScoringVolume;
 
   private:
-    double eBins[30];
-    double tyvekReflectivity[30];
-    double absLength[30];
 
     G4MaterialPropertiesTable* waterMPT;
     G4MaterialPropertiesTable* tyvekMPT;

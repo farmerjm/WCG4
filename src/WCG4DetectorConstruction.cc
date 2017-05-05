@@ -24,9 +24,9 @@ WCG4DetectorConstruction::~WCG4DetectorConstruction()
   
 }
 
-void ConstructMaterials() {
+void WCG4DetectorConstruction::ConstructMaterials() {
 
-  eBins[30] = {  
+  double eBins[30] = {  
     2.08, 2.16, 2.19, 2.23, 2.27, 2.32,
     2.36, 2.41, 2.46, 2.50, 2.56, 2.61,
     2.67, 2.72, 2.79, 2.85, 2.92, 2.99,
@@ -35,7 +35,7 @@ void ConstructMaterials() {
 
   for (int i=0;i <30;i++) eBins[i]*=eV;
 
-  tyvekReflectivity = {
+  double tyvekReflectivity[30] = {
     0.9957, 0.9953, 0.9948, 0.9942, 0.9939, 0.9937,
     0.9937, 0.9940, 0.9945, 0.9954, 0.9964, 0.9975,
     0.9985, 0.9993, 1.0000, 1.0000, 0.9993, 0.9977,
@@ -44,7 +44,7 @@ void ConstructMaterials() {
 
   for (int i=0;i <30;i++) tyvekReflectivity[i]*=0.94;
 
-  absLength = {
+  double absLength[30] = {
     0.092, 0.133, 0.180, 0.203, 0.226, 0.258,
     0.284, 0.302, 0.403, 0.560, 0.735, 0.818,
     0.923, 0.923, 0.993, 0.993, 1.000, 0.941,
@@ -53,7 +53,11 @@ void ConstructMaterials() {
 
   for (int i=0;i <30;i++) absLength[i]*=100*m;
 
-  //waterMPT->AddProperty("RINDEX");
+  double waterRindex[2] = {1.33, 1.33};
+  double waterRindexEbins[2] = {2.08, 4.20};
+
+  waterMPT->AddProperty("RINDEX", waterRindexEbins, waterRindex,2);
+  waterMPT->AddProperty("ABSLENGTH", eBins, absLength,30);
 
 }
 
@@ -72,6 +76,7 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   G4NistManager* man = G4NistManager::Instance();
   G4Material* Air = man->FindOrBuildMaterial("G4_AIR");
   G4Material* Water = man->FindOrBuildMaterial("G4_WATER");
+  Water->SetMaterialPropertiesTable(waterMPT);
   G4Material* Polyethylene = man->FindOrBuildMaterial("G4_POLYETHYLENE");
   G4Material* Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-9*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
 
