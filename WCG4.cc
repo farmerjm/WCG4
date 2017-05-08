@@ -29,11 +29,11 @@ int main() { // construct the default run manager
   WCG4PhysListFactory* fact = new WCG4PhysListFactory(conf);
   WCG4PhysList* physicsList = fact->BuildPhysicsList();
 
-  for (G4int i = 0; ; ++i) {
+/*  for (G4int i = 0; ; ++i) {
     G4VPhysicsConstructor* elem = const_cast<G4VPhysicsConstructor*> (physicsList->GetPhysics(i));
     if (elem == NULL) break;
     G4cout << "FINAL LIST: " << elem->GetPhysicsName() << G4endl;
-  }
+  } */
 
   numCherenkov=0;
   photonCounter=0;
@@ -49,7 +49,7 @@ int main() { // construct the default run manager
   G4VisExecutive* visManager = new G4VisExecutive();
   visManager->Initialize();
   G4UImanager *UI = G4UImanager::GetUIpointer();
-  UI->ApplyCommand("/run/verbose 1");
+  UI->ApplyCommand("/run/verbose 0");
   UI->ApplyCommand("/event/verbose 0");
   UI->ApplyCommand("/tracking/verbose 0");
   UI->ApplyCommand("/control/execute vis.mac");

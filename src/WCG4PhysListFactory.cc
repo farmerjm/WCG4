@@ -22,7 +22,7 @@ WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
     outlist->RegisterPhysics(elem);
   }
   G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 
-  G4OpticalPhysics* ophys = new G4OpticalPhysics(1);
+  G4OpticalPhysics* ophys = new G4OpticalPhysics();
   outlist->RegisterPhysics(ophys);
   ophys->SetTrackSecondariesFirst(kCerenkov, true);
   ophys->SetMaxNumPhotonsPerStep(3);

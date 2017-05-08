@@ -33,7 +33,10 @@
 
 #include "G4VUserDetectorConstruction.hh"
 #include "G4MaterialPropertiesTable.hh"
+#include "G4LogicalBorderSurface.hh"
+#include "G4OpticalSurface.hh"
 #include "globals.hh"
+
 
 class G4VPhysicalVolume;
 class G4LogicalVolume;
@@ -48,6 +51,10 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
     virtual G4VPhysicalVolume* Construct();
 
     void ConstructMaterials();
+    void DefineMaterialConstants();
+    void ConstructWater();
+    void ConstructHDPE();
+    void ConstructLinerOpSurface();
     
     G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
 
@@ -56,8 +63,19 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
+    double eBins[30];
+    double absLength[30];
+    double tyekReflectivity[30];
+    double zeroes[30];
+
     G4MaterialPropertiesTable* waterMPT;
     G4MaterialPropertiesTable* tyvekMPT;
+    G4MaterialPropertiesTable* linerMPT;
+
+    G4Material* HDPE;
+  
+    G4OpticalSurfce LinerOpSurface;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

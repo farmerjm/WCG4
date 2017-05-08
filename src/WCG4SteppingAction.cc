@@ -13,7 +13,7 @@ void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep) {
       //G4cout << "Cherenkov found " << G4endl;
     } if (track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() && PostStep->GetStepStatus()==fGeomBoundary) {  //Check wavelength here
       photonCounter++;
-      G4cout << "Photon exited" << G4endl;
+      //G4cout << "Photon exited" << G4endl;
       track->SetTrackStatus(fStopAndKill);
     }
   }
