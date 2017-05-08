@@ -35,6 +35,16 @@
 #include "G4MaterialPropertiesTable.hh"
 #include "G4LogicalBorderSurface.hh"
 #include "G4OpticalSurface.hh"
+#include "G4RunManager.hh"
+#include "G4NistManager.hh"
+#include "G4Material.hh"
+#include "G4Box.hh"
+#include "G4Tubs.hh"
+#include "G4LogicalVolume.hh"
+#include "G4PVPlacement.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4Element.hh"
+#include "G4ElementTable.hh"
 #include "globals.hh"
 
 
@@ -65,7 +75,7 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
     double eBins[30];
     double absLength[30];
-    double tyekReflectivity[30];
+    double tyvekReflectivity[30];
     double zeroes[30];
 
     G4MaterialPropertiesTable* waterMPT;
@@ -74,7 +84,7 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
     G4Material* HDPE;
   
-    G4OpticalSurfce LinerOpSurface;
+    G4OpticalSurface* LinerOpSurface;
 
 };
 

@@ -1,13 +1,4 @@
 #include "WCG4DetectorConstruction.hh"
-#include "globals.hh"
-#include "G4RunManager.hh"
-#include "G4NistManager.hh"
-#include "G4Material.hh"
-#include "G4Box.hh"
-#include "G4Tubs.hh"
-#include "G4LogicalVolume.hh"
-#include "G4PVPlacement.hh"
-#include "G4SystemOfUnits.hh"
 
 
 WCG4DetectorConstruction::WCG4DetectorConstruction()
@@ -16,7 +7,7 @@ WCG4DetectorConstruction::WCG4DetectorConstruction()
   waterMPT(new G4MaterialPropertiesTable()),
   tyvekMPT(new G4MaterialPropertiesTable()),
   linerMPT(new G4MaterialPropertiesTable()),
-  HDPE(nullptr);
+  HDPE(nullptr)
 {
   ConstructMaterials(); 
 }
@@ -81,23 +72,26 @@ void WCG4DetectorConstruction::ConstructWater() {
 
 }
 
-void ConstructHDPE() {
-  G4double denisty= 0.943*g/cm3;
-  G4int nel, natoms;
-  G4String name;
+void WCG4DetectorConstruction::ConstructHDPE() {
+  G4double density= 0.943*g/cm3;
+  G4int nel, natoms, z;
+  G4String name, symbol;
 
-  HDPE = new G4Material(name="HDPE", density, ne1=2);
+  G4Element* elC = new G4Element(name = "Carbon", symbol = "C", z = 6, 12.0107*g/mole);
+  G4Element* elH = new G4Element(name = "Hydrogen", symbol = "H", z = 1, 1.01*g/mole);
+
+  HDPE = new G4Material(name="HDPE", density, nel=2);
   HDPE->AddElement(elC, natoms=2);
   HDPE->AddElement(elH, natoms=4);
 
-  linerMPT->AddProperty("ABSLENGTH", waterRindexEBins, tyvekReflectivity,30); 
+  linerMPT->AddProperty("ABSLENGTH", eBins, tyvekReflectivity,30); 
 
   HDPE->SetMaterialPropertiesTable(linerMPT);
 
   return;
 }
 
-void ConstructLinerOpSurface {
+void WCG4DetectorConstruction::ConstructLinerOpSurface() {
   double SigmaAlpha=0.17;
   double specBins[3] = {2.08*eV, 3.0*eV, 4.20*eV};
   double specLobe[3] = {0.2, 0.2, 0.2};
@@ -113,7 +107,7 @@ void ConstructLinerOpSurface {
 
   LinerOpSurface->SetModel(unified);
   LinerOpSurface->SetType(dielectric_dielectric);
-  LinerOpSurface->SEtFinish(groundbackpainted);
+  LinerOpSurface->SetFinish(groundbackpainted);
   LinerOpSurface->SetSigmaAlpha(SigmaAlpha);
   LinerOpSurface->SetMaterialPropertiesTable(linerMPT);
 }
@@ -160,9 +154,9 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   G4VPhysicalVolume* physTopwalls = new G4PVPlacement(nullptr,vTopwalls, logTopwalls, "Topwalls", logWorld, false, 2);
   G4VPhysicalVolume* physBottomwalls = new G4PVPlacement(nullptr,vBottomwalls, logBottomwalls, "Bottomwalls", logWorld, false, 2);
 
-  G4LogicalBorderSurface topSurface = new G4LogicalBorderSurface("topsurface", physTank, physTopwalls, LinerOpSurface);
-  G4LogicalBorderSurface bottomSurface = new G4LogicalBorderSurface("bottomsurface", physTank, physBottomwalls, LinerOpSurface);
-  G4LogicalBorderSurface wallSurface = new G4LogicalBorderSurface("wallsurface", physTank, physSideWalls, LinerOpSurface);
+  G4LogicalBorderSurface* topSurface = new G4LogicalBorderSurface("topsurface", physTank, physTopwalls, LinerOpSurface);
+  G4LogicalBorderSurface* bottomSurface = new G4LogicalBorderSurface("bottomsurface", physTank, physBottomwalls, LinerOpSurface);
+  G4LogicalBorderSurface* wallSurface = new G4LogicalBorderSurface("wallsurface", physTank, physSidewalls, LinerOpSurface);
 
   
 
