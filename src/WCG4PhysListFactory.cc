@@ -24,7 +24,7 @@ WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
   G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 
   G4OpticalPhysics* ophys = new G4OpticalPhysics();
   outlist->RegisterPhysics(ophys);
-  ophys->SetTrackSecondariesFirst(kCerenkov, true);
+  ophys->SetTrackSecondariesFirst(kCerenkov, false);
   ophys->SetMaxNumPhotonsPerStep(3);
 
   //Here, search the config and selectively disable processes

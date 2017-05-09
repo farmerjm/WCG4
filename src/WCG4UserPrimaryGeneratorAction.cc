@@ -55,8 +55,8 @@ WCG4UserPrimaryGeneratorAction::WCG4UserPrimaryGeneratorAction()
   G4String particleName;
   G4ParticleDefinition* particle = particleTable->FindParticle(particleName="mu-");
   fParticleGun->SetParticleDefinition(particle);
+  fParticleGun->SetParticleEnergy(1.08*GeV);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,-1.));
-  fParticleGun->SetParticleEnergy(1.*GeV);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -72,7 +72,7 @@ void WCG4UserPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   G4double x0 = 0;
   G4double y0 = 0;
-  G4double z0 = 0.8*m;
+  G4double z0 = 0.5*m;
   
   G4cout << "Placing ParticleGun at " << "("<<x0 <<","<<y0<<","<<z0<<")"<<G4endl;
   fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));

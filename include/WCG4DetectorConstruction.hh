@@ -62,6 +62,7 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
     void ConstructMaterials();
     void DefineMaterialConstants();
+    void DefineElements();
     void ConstructWater();
     void ConstructHDPE();
     void ConstructLinerOpSurface();
@@ -73,18 +74,50 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
+    G4double worlddim;
+    G4double tankRadius;
+    G4double tankHeight;
+    G4double wallThickness;
+
     double eBins[30];
     double absLength[30];
     double tyvekReflectivity[30];
     double zeroes[30];
+
+    G4Element* elC;
+    G4Element* elH;
+    G4Element* elO;
 
     G4MaterialPropertiesTable* waterMPT;
     G4MaterialPropertiesTable* tyvekMPT;
     G4MaterialPropertiesTable* linerMPT;
 
     G4Material* HDPE;
+    G4Material* elWater;
   
     G4OpticalSurface* LinerOpSurface;
+
+    //Volumes
+    G4Box* worldBox;
+    G4Tubs* Tank;
+    G4Tubs* Sidewalls;
+    G4Tubs* Bottomwalls;
+
+    G4LogicalVolume* logWorld;
+    G4LogicalVolume* logTank;
+    G4LogicalVolume* logSidewalls;
+    G4LogicalVolume* logTopwalls;
+    G4LogicalVolume* logBottomwalls;
+
+    G4PhysicalVolume* physWorld;
+    G4PhysicalVolume* physTank;
+    G4PhysicalVolume* physSidewalls;
+    G4PhysicalVolume* physTopwalls;
+    G4PhysicalVolume* physBottomwalls;
+
+    G4LogicalBorderSurface* topSurface;
+    G4LogicalBorderSurface* bottomSurface;
+    G4LogicalBorderSurface* wallSurface;
 
 };
 

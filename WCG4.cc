@@ -42,17 +42,15 @@ int main() { // construct the default run manager
   runManager->SetUserInitialization(physicsList);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
 
-  //initialize G4 kernel
   runManager->Initialize();
 
-  // get the pointer to the UI manager and set verbosities
-  G4VisExecutive* visManager = new G4VisExecutive();
-  visManager->Initialize();
+  //G4VisExecutive* visManager = new G4VisExecutive();
+  //visManager->Initialize();
   G4UImanager *UI = G4UImanager::GetUIpointer();
   UI->ApplyCommand("/run/verbose 0");
   UI->ApplyCommand("/event/verbose 0");
-  UI->ApplyCommand("/tracking/verbose 0");
-  UI->ApplyCommand("/control/execute vis.mac");
+  UI->ApplyCommand("/tracking/verbose 1");
+  //UI->ApplyCommand("/control/execute vis.mac");
 
   int numberOfEvent = 1;
   runManager->BeamOn(numberOfEvent);

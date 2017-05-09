@@ -11,7 +11,6 @@ WCG4StackingAction::~WCG4StackingAction() {
 
 
 G4ClassificationOfNewTrack WCG4StackingAction::ClassifyNewTrack(const G4Track* aTrack) {
-  //if (aTrack->GetDefinition()==G4Electron::ElectronDefinition()) { /
   if (aTrack->GetDefinition()==G4OpticalPhoton::OpticalPhotonDefinition()) {
     optCounter++;
   }

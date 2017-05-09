@@ -62,23 +62,38 @@ void WCG4DetectorConstruction::DefineMaterialConstants() {
   for (int i=0; i<30; i++) zeroes[i]=def_zeroes[i];
 
 }
+  
+void WCG4DetectorConstruction::DefineElements() {
+  G4String name, symbol;
+  G4int z;
+
+  elC = new G4Element(name = "Carbon", symbol = "C", z = 6, 12.0107*g/mole);
+  elH = new G4Element(name = "Hydrogen", symbol = "H", z = 1, 1.01*g/mole);
+  elO = new G4Element(name = "Oxygen", symbol = "O", z = 8, 15.9994*g/mole);
+}
+
 void WCG4DetectorConstruction::ConstructWater() {
+  G4int nel, natoms;
+  G4double density=1*g/cm3;
 
   double waterRindex[2] = {1.33, 1.33};
   double waterRindexEbins[2] = {2.08, 4.20};
 
+  elWater = new G4Material(name="WATER", density, nel=3);
+  elWater->AddElement(elH, natoms=2);
+  elWater->AddElement(elO, natoms=1);
+
   waterMPT->AddProperty("RINDEX", waterRindexEbins, waterRindex,2);
   waterMPT->AddProperty("ABSLENGTH", eBins, absLength,30);
+
+  elWater->SetMaterialPropertiesTable(waterMPT);
 
 }
 
 void WCG4DetectorConstruction::ConstructHDPE() {
   G4double density= 0.943*g/cm3;
-  G4int nel, natoms, z;
-  G4String name, symbol;
-
-  G4Element* elC = new G4Element(name = "Carbon", symbol = "C", z = 6, 12.0107*g/mole);
-  G4Element* elH = new G4Element(name = "Hydrogen", symbol = "H", z = 1, 1.01*g/mole);
+  G4int nel, natoms;
+  G4string name;
 
   HDPE = new G4Material(name="HDPE", density, nel=2);
   HDPE->AddElement(elC, natoms=2);
@@ -117,48 +132,44 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
 {
 
   //dimensions:
-  G4double worlddim=1.0*m;
-  G4double tankRadius=1.8*m;
-  G4double tankHeight=1.2*m;
-  G4double wallThickness=1.22*cm;
+  worlddim=1.0*m;
+  tankRadius=1.8*m;
+  tankHeight=1.2*m;
+  wallThickness=1.22*cm;
 
-  //Now, define materials from internal G4 databases:
-  G4NistManager* man = G4NistManager::Instance();
-  G4Material* Air = man->FindOrBuildMaterial("G4_AIR");
-  G4Material* Water = man->FindOrBuildMaterial("G4_WATER");
-  Water->SetMaterialPropertiesTable(waterMPT);
+  //G4NistManager* man = G4NistManager::Instance();
+  //G4Material* Water = man->FindOrBuildMaterial("G4_WATER");
+  //Water->SetMaterialPropertiesTable(waterMPT);
   //G4Material* Polyethylene = man->FindOrBuildMaterial("G4_POLYETHYLENE");
   G4Material* Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-9*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
 
   //create shapes:
-  G4Box* worldBox = new G4Box("World", 2*worlddim, 2*worlddim, worlddim);
-  G4Tubs* Tank = new G4Tubs("Tank", 0,  tankRadius, tankHeight/2, 0.*deg, 360.*deg); 
-  G4Tubs* Sidewalls = new G4Tubs("Sidewalls",tankRadius, tankRadius+wallThickness, tankHeight/2, 0.*deg, 360.*deg);
-  G4Tubs* Topwalls = new G4Tubs("Topwalls",0, tankRadius+wallThickness, wallThickness/2, 0.*deg, 360.*deg);
-  G4Tubs* Bottomwalls = new G4Tubs("Bottomwalls",0, tankRadius+wallThickness, wallThickness/2, 0.*deg, 360.*deg);
+  worldBox = new G4Box("World", 2*worlddim, 2*worlddim, worlddim);
+  Tank = new G4Tubs("Tank", 0,  tankRadius, tankHeight/2, 0.*deg, 360.*deg); 
+  Sidewalls = new G4Tubs("Sidewalls",tankRadius, tankRadius+wallThickness, tankHeight/2, 0.*deg, 360.*deg);
+  Topwalls = new G4Tubs("Topwalls",0, tankRadius+wallThickness, wallThickness/2, 0.*deg, 360.*deg);
+  Bottomwalls = new G4Tubs("Bottomwalls",0, tankRadius+wallThickness, wallThickness/2, 0.*deg, 360.*deg);
 
   //Next, create logical volumes by matching the shapes with materials
-  G4LogicalVolume* logWorld = new G4LogicalVolume(worldBox,Vacuum, "World");
-  G4LogicalVolume* logTank = new G4LogicalVolume(Tank, Water, "Tank"); 
-  G4LogicalVolume* logSidewalls = new G4LogicalVolume(Sidewalls, HDPE, "Sidewalls");  
-  G4LogicalVolume* logTopwalls = new G4LogicalVolume(Topwalls, HDPE, "Topwalls");  
-  G4LogicalVolume* logBottomwalls = new G4LogicalVolume(Bottomwalls, HDPE, "Bottomwalls");  
+  logWorld = new G4LogicalVolume(worldBox,Vacuum, "World");
+  logTank = new G4LogicalVolume(Tank, elWater, "Tank"); 
+  logSidewalls = new G4LogicalVolume(Sidewalls, HDPE, "Sidewalls");  
+  logTopwalls = new G4LogicalVolume(Topwalls, HDPE, "Topwalls");  
+  logBottomwalls = new G4LogicalVolume(Bottomwalls, HDPE, "Bottomwalls");  
 
   G4ThreeVector centroid = G4ThreeVector(0,0,0);
   G4ThreeVector vTopwalls = G4ThreeVector(0,0,(tankHeight+wallThickness)/2);
   G4ThreeVector vBottomwalls = G4ThreeVector(0,0,-(tankHeight+wallThickness)/2);
 
-  G4VPhysicalVolume* physWorld = new G4PVPlacement(nullptr,centroid, logWorld,"World", nullptr, false, 0);
-  G4VPhysicalVolume* physTank = new G4PVPlacement(nullptr, centroid, logTank, "Tank", logWorld, false, 1);
-  G4VPhysicalVolume* physSidewalls = new G4PVPlacement(nullptr,centroid, logSidewalls, "Sidewalls", logWorld, false, 2);
-  G4VPhysicalVolume* physTopwalls = new G4PVPlacement(nullptr,vTopwalls, logTopwalls, "Topwalls", logWorld, false, 2);
-  G4VPhysicalVolume* physBottomwalls = new G4PVPlacement(nullptr,vBottomwalls, logBottomwalls, "Bottomwalls", logWorld, false, 2);
+  physWorld = new G4PVPlacement(nullptr,centroid, logWorld,"World", nullptr, false, 0);
+  physTank = new G4PVPlacement(nullptr, centroid, logTank, "Tank", logWorld, false, 1);
+  physSidewalls = new G4PVPlacement(nullptr,centroid, logSidewalls, "Sidewalls", logWorld, false, 2);
+  physTopwalls = new G4PVPlacement(nullptr,vTopwalls, logTopwalls, "Topwalls", logWorld, false, 2);
+  physBottomwalls = new G4PVPlacement(nullptr,vBottomwalls, logBottomwalls, "Bottomwalls", logWorld, false, 2);
 
-  G4LogicalBorderSurface* topSurface = new G4LogicalBorderSurface("topsurface", physTank, physTopwalls, LinerOpSurface);
-  G4LogicalBorderSurface* bottomSurface = new G4LogicalBorderSurface("bottomsurface", physTank, physBottomwalls, LinerOpSurface);
-  G4LogicalBorderSurface* wallSurface = new G4LogicalBorderSurface("wallsurface", physTank, physSidewalls, LinerOpSurface);
-
-  
+  topSurface = new G4LogicalBorderSurface("topsurface", physTank, physTopwalls, LinerOpSurface);
+  bottomSurface = new G4LogicalBorderSurface("bottomsurface", physTank, physBottomwalls, LinerOpSurface);
+  wallSurface = new G4LogicalBorderSurface("wallsurface", physTank, physSidewalls, LinerOpSurface);
 
   //fScoringVolume = logTank;
   //What is this?
