@@ -18,6 +18,7 @@ WCG4DetectorConstruction::~WCG4DetectorConstruction()
 }
 
 void WCG4DetectorConstruction::ConstructMaterials() {
+  DefineElements();
   DefineMaterialConstants();
   ConstructWater();
   ConstructHDPE();
