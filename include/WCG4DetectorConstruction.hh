@@ -102,6 +102,7 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
     G4Tubs* Tank;
     G4Tubs* Sidewalls;
     G4Tubs* Bottomwalls;
+    G4Tubs* Topwalls;
 
     G4LogicalVolume* logWorld;
     G4LogicalVolume* logTank;

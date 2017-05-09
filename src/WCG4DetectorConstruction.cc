@@ -75,6 +75,7 @@ void WCG4DetectorConstruction::DefineElements() {
 void WCG4DetectorConstruction::ConstructWater() {
   G4int nel, natoms;
   G4double density=1*g/cm3;
+  G4String name;
 
   double waterRindex[2] = {1.33, 1.33};
   double waterRindexEbins[2] = {2.08, 4.20};
@@ -93,7 +94,7 @@ void WCG4DetectorConstruction::ConstructWater() {
 void WCG4DetectorConstruction::ConstructHDPE() {
   G4double density= 0.943*g/cm3;
   G4int nel, natoms;
-  G4string name;
+  G4String name;
 
   HDPE = new G4Material(name="HDPE", density, nel=2);
   HDPE->AddElement(elC, natoms=2);
