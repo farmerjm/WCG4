@@ -109,11 +109,11 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
     G4LogicalVolume* logTopwalls;
     G4LogicalVolume* logBottomwalls;
 
-    G4PhysicalVolume* physWorld;
-    G4PhysicalVolume* physTank;
-    G4PhysicalVolume* physSidewalls;
-    G4PhysicalVolume* physTopwalls;
-    G4PhysicalVolume* physBottomwalls;
+    G4VPhysicalVolume* physWorld;
+    G4VPhysicalVolume* physTank;
+    G4VPhysicalVolume* physSidewalls;
+    G4VPhysicalVolume* physTopwalls;
+    G4VPhysicalVolume* physBottomwalls;
 
     G4LogicalBorderSurface* topSurface;
     G4LogicalBorderSurface* bottomSurface;
