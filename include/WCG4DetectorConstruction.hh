@@ -81,6 +81,7 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
     double eBins[30];
     double absLength[30];
+    double linerAbsLength[30];
     double tyvekReflectivity[30];
     double zeroes[30];
 
@@ -94,6 +95,7 @@ class WCG4DetectorConstruction : public G4VUserDetectorConstruction
 
     G4Material* HDPE;
     G4Material* elWater;
+    G4Material* Vacuum;
   
     G4OpticalSurface* LinerOpSurface;
 

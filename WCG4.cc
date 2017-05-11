@@ -1,3 +1,5 @@
+#define G4_VIS_USE_OPENGLX
+
 #include "G4RunManager.hh"
 #include "G4UImanager.hh"
 
@@ -21,7 +23,7 @@
 int numCherenkov;
 int photonCounter;
 
-int main() { // construct the default run manager
+int main(int argc, char* argv[]) { // construct the default run manager
 
   G4RunManager *runManager = new G4RunManager;
 
@@ -44,18 +46,21 @@ int main() { // construct the default run manager
 
   runManager->Initialize();
 
-  //G4VisExecutive* visManager = new G4VisExecutive();
-  //visManager->Initialize();
+  G4VisExecutive* visManager = new G4VisExecutive();
+  visManager->Initialize();
   G4UImanager *UI = G4UImanager::GetUIpointer();
   UI->ApplyCommand("/run/verbose 0");
   UI->ApplyCommand("/event/verbose 0");
   UI->ApplyCommand("/tracking/verbose 1");
-  //UI->ApplyCommand("/control/execute vis.mac");
+  UI->ApplyCommand("/control/execute vis.mac");
+  G4UIExecutive* session = new G4UIExecutive(argc, argv);
+  session->SessionStart();
 
-  int numberOfEvent = 1;
-  runManager->BeamOn(numberOfEvent);
+  //int numberOfEvent = 1;
+  G4cout << "Running beam..." << G4endl;
+  //runManager->BeamOn(numberOfEvent);
   // job termination
-  G4cout << numCherenkov << " " << photonCounter << G4endl;
+  //G4cout << numCherenkov << " " << photonCounter << G4endl;
   delete runManager;
   return 0;
 }

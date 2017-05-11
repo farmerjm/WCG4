@@ -55,7 +55,7 @@ WCG4UserPrimaryGeneratorAction::WCG4UserPrimaryGeneratorAction()
   G4String particleName;
   G4ParticleDefinition* particle = particleTable->FindParticle(particleName="mu-");
   fParticleGun->SetParticleDefinition(particle);
-  fParticleGun->SetParticleEnergy(1.08*GeV);
+  fParticleGun->SetParticleEnergy(200*MeV);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,-1.));
 }
 

@@ -61,7 +61,14 @@ void WCG4DetectorConstruction::DefineMaterialConstants() {
     0, 0, 0, 0, 0, 0};
 
   for (int i=0; i<30; i++) zeroes[i]=def_zeroes[i];
+  
+  double def_linerAbsLength[30] = {
+    10, 10, 10, 10, 10, 10,
+    10, 10, 10, 10, 10, 10,
+    10, 10, 10, 10, 10, 10,
+    10, 10, 10, 10, 10, 10};
 
+  for (int i=0; i<30; i++) linerAbsLength[i]=def_linerAbsLength[i];
 }
   
 void WCG4DetectorConstruction::DefineElements() {
@@ -70,7 +77,7 @@ void WCG4DetectorConstruction::DefineElements() {
 
   elC = new G4Element(name = "Carbon", symbol = "C", z = 6, 12.0107*g/mole);
   elH = new G4Element(name = "Hydrogen", symbol = "H", z = 1, 1.01*g/mole);
-  elO = new G4Element(name = "Oxygen", symbol = "O", z = 8, 15.9994*g/mole);
+  elO = new G4Element(name = "Oxygen", symbol = "O", z = 8, 16.00*g/mole);
 }
 
 void WCG4DetectorConstruction::ConstructWater() {
@@ -81,7 +88,7 @@ void WCG4DetectorConstruction::ConstructWater() {
   double waterRindex[2] = {1.33, 1.33};
   double waterRindexEbins[2] = {2.08, 4.20};
 
-  elWater = new G4Material(name="WATER", density, nel=3);
+  elWater = new G4Material(name="WATER", density, nel=2);
   elWater->AddElement(elH, natoms=2);
   elWater->AddElement(elO, natoms=1);
 
@@ -101,7 +108,7 @@ void WCG4DetectorConstruction::ConstructHDPE() {
   HDPE->AddElement(elC, natoms=2);
   HDPE->AddElement(elH, natoms=4);
 
-  linerMPT->AddProperty("ABSLENGTH", eBins, tyvekReflectivity,30); 
+  linerMPT->AddProperty("ABSLENGTH", eBins, linerAbsLength,30); 
 
   HDPE->SetMaterialPropertiesTable(linerMPT);
 
@@ -143,8 +150,9 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   //G4Material* Water = man->FindOrBuildMaterial("G4_WATER");
   //Water->SetMaterialPropertiesTable(waterMPT);
   //G4Material* Polyethylene = man->FindOrBuildMaterial("G4_POLYETHYLENE");
-  G4Material* Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-9*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
+  Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-9*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
 
+  G4cout << "Making volumes" << G4endl;
   //create shapes:
   worldBox = new G4Box("World", 2*worlddim, 2*worlddim, worlddim);
   Tank = new G4Tubs("Tank", 0,  tankRadius, tankHeight/2, 0.*deg, 360.*deg); 
@@ -175,7 +183,7 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
 
   //fScoringVolume = logTank;
   //What is this?
- 
+  G4cout << "Ended detector construction" << G4endl; 
   return physWorld;
 }
 
