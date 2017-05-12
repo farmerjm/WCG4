@@ -2,8 +2,8 @@
 
 
 WCG4PhysListFactory::WCG4PhysListFactory(WCG4PhysListConfig* theConfig) {
-  //referenceListName="QGSP_BIC_HP";
-  referenceListName="FTFP_BERT";
+  referenceListName="QGSP_BIC_HP";
+  //referenceListName="FTFP_BERT";
 }
 
 
@@ -21,11 +21,11 @@ WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
     G4cout << "RegisterPhysics: " << elem->GetPhysicsName() << G4endl;
     outlist->RegisterPhysics(elem);
   }
-//  G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 
-//  G4OpticalPhysics* ophys = new G4OpticalPhysics();
-//  outlist->RegisterPhysics(ophys);
-//  ophys->SetTrackSecondariesFirst(kCerenkov, false);
-//  ophys->SetMaxNumPhotonsPerStep(3);
+  G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 
+  G4OpticalPhysics* ophys = new G4OpticalPhysics();
+  outlist->RegisterPhysics(ophys);
+  ophys->SetTrackSecondariesFirst(kCerenkov, true);
+  ophys->SetMaxNumPhotonsPerStep(3);
   
   G4cout << "Made physics list" << G4endl;
 
