@@ -52,7 +52,7 @@ void WCG4DetectorConstruction::DefineMaterialConstants() {
     0.889, 0.842, 0.754, 0.655, 0.480, 0.380,
     0.311, 0.257, 0.212, 0.171, 0.137, 0.102};
 
-  for (int i=0;i <30;i++) absLength[i]=def_absLength[i]*m;
+  for (int i=0;i <30;i++) absLength[i]=def_absLength[i]*100*m;
 
   double def_zeroes[30] = {
     0, 0, 0, 0, 0, 0,
@@ -68,7 +68,7 @@ void WCG4DetectorConstruction::DefineMaterialConstants() {
     10, 10, 10, 10, 10, 10,
     10, 10, 10, 10, 10, 10};
 
-  for (int i=0; i<30; i++) linerAbsLength[i]=def_linerAbsLength[i];
+  for (int i=0; i<30; i++) linerAbsLength[i]=def_linerAbsLength[i]*m;
 }
   
 void WCG4DetectorConstruction::DefineElements() {
@@ -86,7 +86,7 @@ void WCG4DetectorConstruction::ConstructWater() {
   G4String name;
 
   double waterRindex[2] = {1.33, 1.33};
-  double waterRindexEbins[2] = {2.08, 4.20};
+  double waterRindexEbins[2] = {2.08*eV, 4.20*eV};
 
   elWater = new G4Material(name="WATER", density, nel=2);
   elWater->AddElement(elH, natoms=2);
