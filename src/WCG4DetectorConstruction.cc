@@ -140,16 +140,11 @@ void WCG4DetectorConstruction::ConstructLinerOpSurface() {
 G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
 {
 
-  //dimensions:
   worlddim=1.0*m;
   tankRadius=1.8*m;
   tankHeight=1.2*m;
   wallThickness=1.22*cm;
 
-  //G4NistManager* man = G4NistManager::Instance();
-  //G4Material* Water = man->FindOrBuildMaterial("G4_WATER");
-  //Water->SetMaterialPropertiesTable(waterMPT);
-  //G4Material* Polyethylene = man->FindOrBuildMaterial("G4_POLYETHYLENE");
   Vacuum = new G4Material("Vacuum",1., 1.101*g/mole, 1.e-9*g/cm3, kStateGas,0.1*kelvin, 1.e-19*pascal);
 
   G4cout << "Making volumes" << G4endl;
@@ -181,8 +176,6 @@ G4VPhysicalVolume* WCG4DetectorConstruction::Construct()
   bottomSurface = new G4LogicalBorderSurface("bottomsurface", physTank, physBottomwalls, LinerOpSurface);
   wallSurface = new G4LogicalBorderSurface("wallsurface", physTank, physSidewalls, LinerOpSurface);
 
-  //fScoringVolume = logTank;
-  //What is this?
   G4cout << "Ended detector construction" << G4endl; 
   return physWorld;
 }

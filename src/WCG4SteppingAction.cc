@@ -25,7 +25,7 @@ void WCG4SteppingAction::UserSteppingAction(const G4Step* aStep) {
     if (track->GetDefinition() == G4MuonMinus::MuonMinusDefinition()) color= G4Colour(0,0,1);
     if (track->GetDefinition() == G4Electron::ElectronDefinition()) color = G4Colour(1,0,0);
     if (track->GetDefinition() == G4Gamma::GammaDefinition()) color = G4Colour(1,0,1);
-    if (track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) color = G4Colour(0,0,1);
+    if (track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) color = G4Colour(0,1,0);
     G4VisAttributes attribs(color);
     G4Polyline polyline;
     polyline.SetVisAttributes(attribs);
