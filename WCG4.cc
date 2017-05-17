@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) { // construct the default run manager
   G4UImanager *UI = G4UImanager::GetUIpointer();
   UI->ApplyCommand("/run/verbose 0");
   UI->ApplyCommand("/event/verbose 0");
-  UI->ApplyCommand("/tracking/verbose 1");
+  UI->ApplyCommand("/tracking/verbose 0");
   //UI->ApplyCommand("/control/execute vis.mac");
   //G4UIExecutive* session = new G4UIExecutive(argc, argv);
   //session->SessionStart();

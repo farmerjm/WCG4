@@ -10,6 +10,15 @@ WCG4SimManager::WCG4SimManager() {
 void WCG4SimManager::ConfigureRunPhysics(WCG4SimConfig* theConf) {
   gConfig = theConf; 
   if (gConfig->doMuonIonization) UI->ApplyCommand("process/activate muIoni"); else UI->ApplyCommand("process/deactivate muIoni");
+  if (gConfig->doPairProd) {
+    UI->ApplyCommand("process/activate msc");
+    UI->ApplyCommand("process/activate muBrems");
+    UI->ApplyCommand("process/activate muPairProd");
+  } else {
+    UI->ApplyCommand("process/deactivate msc");
+    UI->ApplyCommand("process/deactivate muBrems");
+    UI->ApplyCommand("process/deactivate muPairProd");
+  }
 }
 
 
@@ -34,6 +43,7 @@ void WCG4SimManager::EndRun() {
 void WCG4SimManager::CalculateVEM() {
   const WCG4StackingAction* stack = dynamic_cast<const WCG4StackingAction*>(G4RunManager::GetRunManager()->GetUserStackingAction());
   for (auto conf: configList) {
+    ConfigureRunPhysics(conf);
     UI->ApplyCommand("/gun/energy 1.08 GeV");
     UI->ApplyCommand("/run/beamOn 1");
     VEMList.push_back(static_cast<double>(stack->GetNumPhotons()));
