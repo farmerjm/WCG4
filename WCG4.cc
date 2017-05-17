@@ -5,9 +5,9 @@
 
 #include "WCG4DetectorConstruction.hh"
 #include "WCG4ActionInitialization.hh"
-#include "WCG4PhysListConfig.hh"
 #include "WCG4PhysListFactory.hh"
-#incluce "WCG4SimConfig.hh"
+#include "WCG4SimManager.hh"
+#include "WCG4SimConfig.hh"
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
@@ -22,7 +22,6 @@
 #include "Randomize.hh"
 int numCherenkov;
 int photonCounter;
-
 WCG4SimConfig* gConfig;
 
 
@@ -30,8 +29,7 @@ int main(int argc, char* argv[]) { // construct the default run manager
 
   G4RunManager *runManager = new G4RunManager;
 
-  WCG4PhysListConfig* conf = new WCG4PhysListConfig();
-  WCG4PhysListFactory* fact = new WCG4PhysListFactory(conf);
+  WCG4PhysListFactory* fact = new WCG4PhysListFactory();
   WCG4PhysList* physicsList = fact->BuildPhysicsList();
 
 /*  for (G4int i = 0; ; ++i) {
@@ -58,9 +56,11 @@ int main(int argc, char* argv[]) { // construct the default run manager
   //UI->ApplyCommand("/control/execute vis.mac");
   //G4UIExecutive* session = new G4UIExecutive(argc, argv);
   //session->SessionStart();
+  
+  WCG4SimManager man;
 
   //int numberOfEvent = 1;
-  G4cout << "Running beam..." << G4endl;
+  //G4cout << "Running beam..." << G4endl;
   //runManager->BeamOn(numberOfEvent);
   // job termination
   //G4cout << numCherenkov << " " << photonCounter << G4endl;

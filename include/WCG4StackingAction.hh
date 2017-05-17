@@ -13,6 +13,8 @@ public:
   WCG4StackingAction();
   virtual ~WCG4StackingAction();
 
+  int GetNumPhotons() const {return optCounter;}
+
 private:
   virtual G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* aTrack);
   virtual void NewStage();
