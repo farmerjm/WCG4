@@ -27,7 +27,12 @@ WCG4SimConfig* gConfig;
 
 int main(int argc, char* argv[]) { // construct the default run manager
 
+#ifdef G4MULTITHREADED
+  G4MTRunManager *runManager = new G4MTRunManager;
+  runManager->SetNumberOfThreads(5);
+#else
   G4RunManager *runManager = new G4RunManager;
+#endif
 
   WCG4PhysListFactory* fact = new WCG4PhysListFactory();
   WCG4PhysList* physicsList = fact->BuildPhysicsList();

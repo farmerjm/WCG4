@@ -4,6 +4,7 @@ WCG4SimManager::WCG4SimManager() {
   runID=0;
   start = 150;
   end = 3000; 
+  numEvents=1000;
   UI = G4UImanager::GetUIpointer();
 }
 
@@ -42,12 +43,21 @@ void WCG4SimManager::EndRun() {
 
 void WCG4SimManager::CalculateVEM() {
   const WCG4StackingAction* stack = dynamic_cast<const WCG4StackingAction*>(G4RunManager::GetRunManager()->GetUserStackingAction());
+  std::vector<double> data;
   for (auto conf: configList) {
     ConfigureRunPhysics(conf);
     UI->ApplyCommand("/gun/energy 1.08 GeV");
-    UI->ApplyCommand("/run/beamOn 1");
-    VEMList.push_back(static_cast<double>(stack->GetNumPhotons()));
-    G4cout << "VEM calculated:  " << photonCounter << G4endl;
+    for (int i=0; i< numEvents; i++) {
+      UI->ApplyCommand("/run/beamOn 1");
+      data.push_back(photonCounter);
+    }
+    double mean = std::accumulate(data.begin(), data.end(), 0.0)/data.size();
+    std::vector<double> diff(data.size());
+    std::transform(data.begin(), data.end(), diff.begin(), [mean](double x) {return x - mean;});
+    double std= std::sqrt(std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0)/data.size());
+    VEMList.push_back(mean);
+    VEMSigmaList.push_back(std);
+    G4cout << "VEM calculated:  " << mean << " +/- " << std << G4endl;
   }
 }
 
@@ -60,16 +70,27 @@ void WCG4SimManager::RunSimAllConfigs(double granularity) {
   for (double d=start; d < end; d+=granularity) eVec.push_back(d);
 
   for (auto conf : configList) {
-    std::vector<double> dat;
+    std::vector<double> MuonCurve;
+    std::vector<double> MuonCurveSigma;
     ConfigureRunPhysics(conf); 
     for (auto d : eVec) {
+      std::vector<double> data;
       G4String energy=std::to_string(d);
       G4String eCmd = "/gun/energy " + energy + " MeV";
       UI->ApplyCommand(eCmd);
-      UI->ApplyCommand("/run/beamOn 1");
-      dat.push_back(static_cast<double>(photonCounter));
+      for (int i=0; i< numEvents; i++) {
+        UI->ApplyCommand("/run/beamOn 1");
+        data.push_back(photonCounter);
+      }
+      double mean = std::accumulate(data.begin(), data.end(), 0.0)/data.size();
+      std::vector<double> diff(data.size());
+      std::transform(data.begin(), data.end(), diff.begin(), [mean](double x) {return x - mean;});
+      double std= std::sqrt(std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0)/data.size());
+      MuonCurve.push_back(mean);
+      MuonCurveSigma.push_back(std);
     }
-    dataList.push_back(dat);
+    MuonCurves.push_back(MuonCurve);
+    MuonCurvesSigma.push_back(MuonCurveSigma);
     EndRun();
   }
   G4cout << "Done." << G4endl;

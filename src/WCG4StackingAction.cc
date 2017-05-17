@@ -25,7 +25,7 @@ G4ClassificationOfNewTrack WCG4StackingAction::ClassifyNewTrack(const G4Track* a
 }
 
 void WCG4StackingAction::NewStage() {
- G4cout << "Number of optphot in this event: " << optCounter << G4endl;
+ //G4cout << "Number of optphot in this event: " << optCounter << G4endl;
 }
 
 void WCG4StackingAction::PrepareNewEvent() {
