@@ -37,7 +37,7 @@ void WCG4SimManager::CalculateVEM() {
     UI->ApplyCommand("/gun/energy 1.08 GeV");
     UI->ApplyCommand("/run/beamOn 1");
     VEMList.push_back(static_cast<double>(stack->GetNumPhotons()));
-    G4cout << "VEM calculated:  " << stack->GetNumPhotons() << G4endl;
+    G4cout << "VEM calculated:  " << photonCounter << G4endl;
   }
 }
 
@@ -57,7 +57,7 @@ void WCG4SimManager::RunSimAllConfigs(double granularity) {
       G4String eCmd = "/gun/energy " + energy + " MeV";
       UI->ApplyCommand(eCmd);
       UI->ApplyCommand("/run/beamOn 1");
-      dat.push_back(static_cast<double>(stack->GetNumPhotons()));
+      dat.push_back(static_cast<double>(photonCounter));
     }
     dataList.push_back(dat);
     EndRun();

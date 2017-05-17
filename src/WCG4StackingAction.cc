@@ -15,6 +15,11 @@ G4ClassificationOfNewTrack WCG4StackingAction::ClassifyNewTrack(const G4Track* a
     optCounter++;
 
   }
+
+  if (aTrack->GetDefinition()==G4Electron::ElectronDefinition()) {
+    if (!gConfig->doDeltaRays && aTrack->GetCreatorProcess()->GetProcessName()=="muIoni") return fKill;
+  }
+  //muPairProd, muBrems, msc
   return fUrgent;
 }
 
@@ -24,4 +29,5 @@ void WCG4StackingAction::NewStage() {
 
 void WCG4StackingAction::PrepareNewEvent() {
   optCounter=0;
+  photonCounter=0;
 }

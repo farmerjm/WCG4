@@ -3,6 +3,8 @@
 
 #include "G4UserStackingAction.hh"
 #include "G4Track.hh"
+#include "common.hh"
+#include "G4VProcess.hh"
 //#include "G4ParticleDefition.hh"
 #include "G4ParticleTypes.hh"
 
