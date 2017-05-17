@@ -18,7 +18,7 @@ WCG4PhysList* WCG4PhysListFactory::BuildPhysicsList() {
     G4VPhysicsConstructor* elem =
       const_cast<G4VPhysicsConstructor*> (list->GetPhysics(i));
     if (elem == NULL) break;
-    G4cout << "RegisterPhysics: " << elem->GetPhysicsName() << G4endl;
+    //G4cout << "RegisterPhysics: " << elem->GetPhysicsName() << G4endl;
     outlist->RegisterPhysics(elem);
   }
   G4cout << "RegisterPhysics: OpticalPhysics" << G4endl; 

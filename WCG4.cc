@@ -58,6 +58,8 @@ int main(int argc, char* argv[]) { // construct the default run manager
   //session->SessionStart();
   
   WCG4SimManager man;
+  man.GenerateStandardConfigs();
+  man.CalculateVEM();
 
   //int numberOfEvent = 1;
   //G4cout << "Running beam..." << G4endl;

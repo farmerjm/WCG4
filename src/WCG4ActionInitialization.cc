@@ -60,7 +60,6 @@ void WCG4ActionInitialization::Build() const
   SetUserAction(PGA);
   WCG4StackingAction* stack  = new WCG4StackingAction();
   SetUserAction(stack);
-  
   SetUserAction(new WCG4SteppingAction);
 }  
 

@@ -7,7 +7,7 @@ class WCG4PhysList : public G4VModularPhysicsList {
 public:
 
   WCG4PhysList()
-    {defaultCut=1.0*mm;} //Why won't mm compile?
+    {defaultCut=1.0*mm;}
   ~WCG4PhysList()
     {};
 
