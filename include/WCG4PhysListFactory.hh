@@ -10,12 +10,11 @@
 class WCG4PhysListFactory : public G4PhysListFactory
 {
 
-  WCG4PhysListConfig* config;
   std::string referenceListName;
 
 public:
 
-  WCG4PhysListFactory(WCG4PhysListConfig* theConfig);
+  WCG4PhysListFactory();
   ~WCG4PhysListFactory();
 
 

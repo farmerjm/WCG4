@@ -1,7 +1,7 @@
 #include "WCG4PhysListFactory.hh"
 
 
-WCG4PhysListFactory::WCG4PhysListFactory(WCG4PhysListConfig* theConfig) {
+WCG4PhysListFactory::WCG4PhysListFactory() {
   referenceListName="QGSP_BIC_HP";
   //referenceListName="FTFP_BERT";
 }

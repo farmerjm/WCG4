@@ -7,6 +7,7 @@
 #include "WCG4ActionInitialization.hh"
 #include "WCG4PhysListConfig.hh"
 #include "WCG4PhysListFactory.hh"
+#incluce "WCG4SimConfig.hh"
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
@@ -19,9 +20,11 @@
 #include "G4UIExecutive.hh"
 #include "common.hh"
 #include "Randomize.hh"
-
 int numCherenkov;
 int photonCounter;
+
+WCG4SimConfig* gConfig;
+
 
 int main(int argc, char* argv[]) { // construct the default run manager
 
@@ -53,8 +56,8 @@ int main(int argc, char* argv[]) { // construct the default run manager
   UI->ApplyCommand("/event/verbose 0");
   UI->ApplyCommand("/tracking/verbose 0");
   //UI->ApplyCommand("/control/execute vis.mac");
-  G4UIExecutive* session = new G4UIExecutive(argc, argv);
-  session->SessionStart();
+  //G4UIExecutive* session = new G4UIExecutive(argc, argv);
+  //session->SessionStart();
 
   //int numberOfEvent = 1;
   G4cout << "Running beam..." << G4endl;
