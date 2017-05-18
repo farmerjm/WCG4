@@ -7,10 +7,12 @@
 #include "G4RunManager.hh"
 #include "G4UImanager.hh"
 #include "WCG4StackingAction.hh"
-//#include "TH1D.h"
 
 class WCG4SimManager {
   private:
+
+    static WCG4SimManager* instance;
+    static WCG4SimManager* CreateInstance() {return new WCG4SimManager();}
 
     unsigned int runID;
     unsigned int numEvents;
@@ -35,6 +37,8 @@ class WCG4SimManager {
 
     void CalculateVEM();
     void RunSimAllConfigs(double granularity);
+
+    static WCG4SimManager& Instance();
 };
 
 

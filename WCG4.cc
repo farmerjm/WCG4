@@ -22,6 +22,7 @@
 #include "Randomize.hh"
 int numCherenkov;
 int photonCounter;
+int numConfigs;
 WCG4SimConfig* gConfig;
 
 
@@ -46,6 +47,9 @@ int main(int argc, char* argv[]) { // construct the default run manager
 
   numCherenkov=0;
   photonCounter=0;
+
+  WCG4SimManager man;
+  man.GenerateStandardConfigs();
 
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(physicsList);

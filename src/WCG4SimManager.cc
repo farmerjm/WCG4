@@ -24,13 +24,11 @@ void WCG4SimManager::ConfigureRunPhysics(WCG4SimConfig* theConf) {
 
 
 void WCG4SimManager::GenerateStandardConfigs() {
-  WCG4SimConfig* bare = new WCG4SimConfig(0,0,0, "Bare");
   WCG4SimConfig* muIon = new WCG4SimConfig(0,1,0,"MuIon");
   WCG4SimConfig* pp = new WCG4SimConfig(1,1,0, "PP");
   WCG4SimConfig* dr = new WCG4SimConfig(0,1,1, "DeltaRay");
   WCG4SimConfig* all = new WCG4SimConfig(1,1,1, "All");
 
-  AddConfig(bare);
   AddConfig(muIon);
   AddConfig(pp);
   AddConfig(dr);
@@ -62,6 +60,7 @@ void WCG4SimManager::CalculateVEM() {
 
 void WCG4SimManager::RunSimAllConfigs(double granularity) {
 
+  UI = G4UImanager::GetUIpointer();
   G4RunManager* runManager = G4RunManager::GetRunManager();
   const WCG4StackingAction* stack = dynamic_cast<const WCG4StackingAction*>(runManager->GetUserStackingAction());
 
@@ -93,4 +92,11 @@ void WCG4SimManager::RunSimAllConfigs(double granularity) {
     EndRun();
   }
   G4cout << "Done." << G4endl;
+}
+
+WCG4SimManager& WCG4SimManager::Instance() {
+
+  if (WCG4SimManager::instance == 0) WCG4SimManager::instance=CreateInstance();
+  return *(WCG4SimManager::instance);
+
 }

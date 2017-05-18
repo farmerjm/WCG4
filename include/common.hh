@@ -4,4 +4,5 @@
 extern int numCherenkov;
 extern int photonCounter;
 extern WCG4SimConfig* gConfig;
+
 #endif
