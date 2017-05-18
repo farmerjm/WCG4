@@ -27,7 +27,7 @@ WCG4SimConfig* gConfig;
 
 int main(int argc, char* argv[]) { // construct the default run manager
 
-#ifdef G4MULTITHREADED
+#ifdef G4MULTITHREADEDq
   G4cout << "Running in MT mode..." << G4endl;
   G4MTRunManager *runManager = new G4MTRunManager;
   runManager->SetNumberOfThreads(10);
