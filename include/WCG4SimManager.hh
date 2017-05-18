@@ -41,5 +41,4 @@ class WCG4SimManager {
     static WCG4SimManager& Instance();
 };
 
-
 #endif

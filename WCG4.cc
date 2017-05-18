@@ -67,8 +67,6 @@ int main(int argc, char* argv[]) { // construct the default run manager
   //G4UIExecutive* session = new G4UIExecutive(argc, argv);
   //session->SessionStart();
   
-  WCG4SimManager man;
-  man.GenerateStandardConfigs();
   man.CalculateVEM();
 
   delete runManager;

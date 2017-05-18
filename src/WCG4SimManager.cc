@@ -94,6 +94,8 @@ void WCG4SimManager::RunSimAllConfigs(double granularity) {
   G4cout << "Done." << G4endl;
 }
 
+WCG4SimManager* WCG4SimManager::instance;
+
 WCG4SimManager& WCG4SimManager::Instance() {
 
   if (WCG4SimManager::instance == 0) WCG4SimManager::instance=CreateInstance();
