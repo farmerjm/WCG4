@@ -43,14 +43,13 @@ void WCG4SimManager::EndRun() {
 
 void WCG4SimManager::CalculateVEM() {
   const WCG4StackingAction* stack = dynamic_cast<const WCG4StackingAction*>(G4RunManager::GetRunManager()->GetUserStackingAction());
-  std::vector<double> data;
   for (auto conf: configList) {
     ConfigureRunPhysics(conf);
     UI->ApplyCommand("/gun/energy 1.08 GeV");
-    for (int i=0; i< numEvents; i++) {
-      UI->ApplyCommand("/run/beamOn 1");
-      data.push_back(photonCounter);
-    }
+    G4String sNumEvents = std::to_string(numEvents);
+    G4String beamcmd = "/run/beamOn " + sNumEvents;
+    UI->ApplyCommand(beamcmd);
+    const std::vector<unsigned int> & data = stack->photDat;
     double mean = std::accumulate(data.begin(), data.end(), 0.0)/data.size();
     std::vector<double> diff(data.size());
     std::transform(data.begin(), data.end(), diff.begin(), [mean](double x) {return x - mean;});

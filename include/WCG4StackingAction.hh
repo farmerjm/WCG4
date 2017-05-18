@@ -16,6 +16,8 @@ public:
   virtual ~WCG4StackingAction();
 
   int GetNumPhotons() const {return optCounter;}
+  
+  std::vector<unsigned int> photDat;
 
 private:
   virtual G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* aTrack);

@@ -28,8 +28,9 @@ WCG4SimConfig* gConfig;
 int main(int argc, char* argv[]) { // construct the default run manager
 
 #ifdef G4MULTITHREADED
+  G4cout << "Running in MT mode..." << G4endl;
   G4MTRunManager *runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(5);
+  runManager->SetNumberOfThreads(10);
 #else
   G4RunManager *runManager = new G4RunManager;
 #endif
@@ -66,11 +67,6 @@ int main(int argc, char* argv[]) { // construct the default run manager
   man.GenerateStandardConfigs();
   man.CalculateVEM();
 
-  //int numberOfEvent = 1;
-  //G4cout << "Running beam..." << G4endl;
-  //runManager->BeamOn(numberOfEvent);
-  // job termination
-  //G4cout << numCherenkov << " " << photonCounter << G4endl;
   delete runManager;
   return 0;
 }
