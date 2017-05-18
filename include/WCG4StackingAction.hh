@@ -7,6 +7,8 @@
 #include "G4VProcess.hh"
 //#include "G4ParticleDefition.hh"
 #include "G4ParticleTypes.hh"
+#include "WCG4SimManager.hh"
+#include "WCG4Analysis.hh"
 
 class WCG4StackingAction :  public G4UserStackingAction {
 

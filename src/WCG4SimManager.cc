@@ -4,7 +4,7 @@ WCG4SimManager::WCG4SimManager() {
   runID=0;
   start = 150;
   end = 3000; 
-  numEvents=1000;
+  numEvents=20;
   UI = G4UImanager::GetUIpointer();
 }
 
@@ -24,6 +24,7 @@ void WCG4SimManager::ConfigureRunPhysics(WCG4SimConfig* theConf) {
 
 
 void WCG4SimManager::GenerateStandardConfigs() {
+  G4cout << "Making configs..." << G4endl;
   WCG4SimConfig* muIon = new WCG4SimConfig(0,1,0,"MuIon");
   WCG4SimConfig* pp = new WCG4SimConfig(1,1,0, "PP");
   WCG4SimConfig* dr = new WCG4SimConfig(0,1,1, "DeltaRay");
@@ -96,9 +97,8 @@ void WCG4SimManager::RunSimAllConfigs(double granularity) {
 
 WCG4SimManager* WCG4SimManager::instance;
 
-WCG4SimManager& WCG4SimManager::Instance() {
-
+WCG4SimManager* WCG4SimManager::Instance() {
   if (WCG4SimManager::instance == 0) WCG4SimManager::instance=CreateInstance();
-  return *(WCG4SimManager::instance);
+  return WCG4SimManager::instance;
 
 }

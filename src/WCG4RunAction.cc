@@ -11,17 +11,18 @@ WCG4RunAction::WCG4RunAction()
  : G4UserRunAction()
 { 
   auto analysisManager = G4AnalysisManager::Instance();
-  G4cout << "Using " << analysisManager->GetType() << G4endl;
 
   // Default settings
   analysisManager->SetVerboseLevel(1);
   analysisManager->SetFileName("WCG4out");
 
   // Creating 1D histograms
-  analysisManager
-    ->CreateH1("","Drift Chamber 1 # Hits", 50, 0., 50); // h1 Id = 0
-  analysisManager
-    ->CreateH1("Chamber2","Drift Chamber 2 # Hits", 50, 0., 50); // h1 Id = 1
+  WCG4SimManager* simMan = WCG4SimManager::Instance();
+  for (auto conf : simMan->GetConfigs()) {
+    G4String str = G4String("VEM: ") + G4String(conf->title);
+    G4int intid = analysisManager->CreateH1(str,str, 20, 30000, 50000);
+    G4cout << "Made histo:  id=" << intid << G4endl;
+  }
   
 }
 

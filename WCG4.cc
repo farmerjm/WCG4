@@ -28,13 +28,13 @@ WCG4SimConfig* gConfig;
 
 int main(int argc, char* argv[]) { // construct the default run manager
 
-#ifdef G4MULTITHREADED
-  G4cout << "Running in MT mode..." << G4endl;
-  G4MTRunManager *runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(10);
-#else
+//#ifdef G4MULTITHREADED
+//  G4cout << "Running in MT mode..." << G4endl;
+//  G4MTRunManager *runManager = new G4MTRunManager;
+//  runManager->SetNumberOfThreads(10);
+//#else
   G4RunManager *runManager = new G4RunManager;
-#endif
+//#endif
 
   WCG4PhysListFactory* fact = new WCG4PhysListFactory();
   WCG4PhysList* physicsList = fact->BuildPhysicsList();
@@ -48,9 +48,9 @@ int main(int argc, char* argv[]) { // construct the default run manager
   numCherenkov=0;
   photonCounter=0;
 
-  WCG4SimManager man;
-  man.GenerateStandardConfigs();
-
+  WCG4SimManager* man = WCG4SimManager::Instance();
+  man->GenerateStandardConfigs();
+  G4cout << "nConfigs: " << man->GetConfigs().size() << G4endl;
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(physicsList);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) { // construct the default run manager
   //G4UIExecutive* session = new G4UIExecutive(argc, argv);
   //session->SessionStart();
   
-  man.CalculateVEM();
+  man->CalculateVEM();
 
   delete runManager;
   return 0;

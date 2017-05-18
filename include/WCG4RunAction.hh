@@ -2,6 +2,7 @@
 #ifndef B5RunAction_h
 #define B5RunAction_h 1
 
+#include "WCG4SimManager.hh"
 #include "G4UserRunAction.hh"
 #include "globals.hh"
 
