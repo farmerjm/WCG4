@@ -28,10 +28,10 @@ WCG4SimConfig* gConfig;
 
 int main(int argc, char* argv[]) { // construct the default run manager
 
-#ifdef G4MULTITHREADEDq
+#ifdef G4MULTITHREADED
   G4cout << "Running in MT mode..." << G4endl;
   G4MTRunManager *runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(10);
+  runManager->SetNumberOfThreads(3);
 #else
   G4RunManager *runManager = new G4RunManager;
 #endif
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) { // construct the default run manager
 
   WCG4SimManager* man = WCG4SimManager::Instance();
   man->GenerateStandardConfigs();
-  G4cout << "nConfigs: " << man->GetConfigs().size() << G4endl;
+  
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(physicsList);
   runManager->SetUserInitialization(new WCG4ActionInitialization);

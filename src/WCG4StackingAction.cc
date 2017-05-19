@@ -27,7 +27,9 @@ G4ClassificationOfNewTrack WCG4StackingAction::ClassifyNewTrack(const G4Track* a
 void WCG4StackingAction::NewStage() {
   photDat.push_back(photonCounter);
   auto analysisManager = G4AnalysisManager::Instance();
-  analysisManager->FillH1(0, photonCounter);
+  auto simManager = WCG4SimManager::Instance();
+  G4cout << "Filling..." << G4endl;
+  analysisManager->FillH1(simManager->GetRunID(), photonCounter);
 }
 
 void WCG4StackingAction::PrepareNewEvent() {

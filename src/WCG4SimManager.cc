@@ -41,21 +41,26 @@ void WCG4SimManager::EndRun() {
 
 void WCG4SimManager::CalculateVEM() {
   const WCG4StackingAction* stack = dynamic_cast<const WCG4StackingAction*>(G4RunManager::GetRunManager()->GetUserStackingAction());
+  runID=0;
   for (auto conf: configList) {
     ConfigureRunPhysics(conf);
     UI->ApplyCommand("/gun/energy 1.08 GeV");
     G4String sNumEvents = std::to_string(numEvents);
     G4String beamcmd = "/run/beamOn " + sNumEvents;
     UI->ApplyCommand(beamcmd);
-    const std::vector<unsigned int> & data = stack->photDat;
+    /*const std::vector<unsigned int> & data = stack->photDat;
     double mean = std::accumulate(data.begin(), data.end(), 0.0)/data.size();
     std::vector<double> diff(data.size());
     std::transform(data.begin(), data.end(), diff.begin(), [mean](double x) {return x - mean;});
     double std= std::sqrt(std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0)/data.size());
     VEMList.push_back(mean);
     VEMSigmaList.push_back(std);
-    G4cout << "VEM calculated:  " << mean << " +/- " << std << G4endl;
+    G4cout << "VEM calculated:  " << mean << " +/- " << std << G4endl;*/
+    runID++;
   }
+  auto analysisManager = G4AnalysisManager::Instance();
+  analysisManager->Write();
+  analysisManager->CloseFile();
 }
 
 void WCG4SimManager::RunSimAllConfigs(double granularity) {
