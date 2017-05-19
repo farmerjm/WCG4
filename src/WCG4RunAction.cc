@@ -32,7 +32,8 @@ void WCG4RunAction::BeginOfRunAction(const G4Run* /*run*/)
   auto WCG4SimManager = WCG4SimManager::Instance();
   G4String str = G4String("VEM: ") + G4String(gConfig->title);
   G4String fname = G4String("out/VEM") + G4String(gConfig->title);
-  G4int intid = analysisManager->CreateH1(str,str, 20, 25000, 55000);
+  G4int intid = analysisManager->CreateH1(str,str, 25, 25000, 55000);
+  G4cout << "Made histo " << intid << G4endl;
   analysisManager->OpenFile(fname);
 }
 
