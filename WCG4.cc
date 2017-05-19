@@ -22,6 +22,7 @@
 #include "Randomize.hh"
 int numCherenkov;
 int photonCounter;
+int numConfigs;
 WCG4SimConfig* gConfig;
 
 
@@ -47,6 +48,9 @@ int main(int argc, char* argv[]) { // construct the default run manager
   numCherenkov=0;
   photonCounter=0;
 
+  WCG4SimManager* man = WCG4SimManager::Instance();
+  man->GenerateStandardConfigs();
+  G4cout << "nConfigs: " << man->GetConfigs().size() << G4endl;
   runManager->SetUserInitialization(new WCG4DetectorConstruction);
   runManager->SetUserInitialization(physicsList);
   runManager->SetUserInitialization(new WCG4ActionInitialization);
@@ -63,9 +67,7 @@ int main(int argc, char* argv[]) { // construct the default run manager
   //G4UIExecutive* session = new G4UIExecutive(argc, argv);
   //session->SessionStart();
   
-  WCG4SimManager man;
-  man.GenerateStandardConfigs();
-  man.CalculateVEM();
+  man->CalculateVEM();
 
   delete runManager;
   return 0;
