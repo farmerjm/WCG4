@@ -24,7 +24,6 @@ void WCG4SimManager::ConfigureRunPhysics(WCG4SimConfig* theConf) {
 
 
 void WCG4SimManager::GenerateStandardConfigs() {
-  G4cout << "Making configs..." << G4endl;
   WCG4SimConfig* muIon = new WCG4SimConfig(0,1,0,"MuIon");
   WCG4SimConfig* pp = new WCG4SimConfig(1,1,0, "PP");
   WCG4SimConfig* dr = new WCG4SimConfig(0,1,1, "DeltaRay");
@@ -92,7 +91,6 @@ void WCG4SimManager::RunSimAllConfigs(double granularity) {
     MuonCurvesSigma.push_back(MuonCurveSigma);
     EndRun();
   }
-  G4cout << "Done." << G4endl;
 }
 
 WCG4SimManager* WCG4SimManager::instance;
