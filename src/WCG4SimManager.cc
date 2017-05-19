@@ -4,7 +4,7 @@ WCG4SimManager::WCG4SimManager() {
   runID=0;
   start = 150;
   end = 3000; 
-  numEvents=20;
+  numEvents=250;
   UI = G4UImanager::GetUIpointer();
 }
 
